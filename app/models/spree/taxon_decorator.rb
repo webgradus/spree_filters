@@ -10,4 +10,12 @@ Spree::Taxon.class_eval do
     return mas
   end
 
+  def main_properties
+    main_props = self.properties
+    if main_props.empty? && self.parent_id
+      main_props = self.parent.main_properties
+    end
+    main_props
+  end
+
 end
