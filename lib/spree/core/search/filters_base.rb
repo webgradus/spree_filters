@@ -1,7 +1,7 @@
 module Spree
   module Core
     module Search
-      class Base
+      class FiltersBase
         attr_accessor :properties
         attr_accessor :current_user
         attr_accessor :current_currency
@@ -34,7 +34,7 @@ module Spree
           #.where("spree_taxonomies.name = '#{Main_taxonomy}' ")
           #
           properties_scope = get_properties_scope().blank? ? '' : 'spree_products.id in (' + get_properties_scope() + ')'
-          base_scope = Spree::Product.joins(taxons: :taxonomy).joins(:master => :default_price).active.where(properties_scope).where("spree_prices.amount BETWEEN #{@properties[:min]} AND #{@properties[:max]} AND spree_prices.amount > 0")
+          base_scope = Spree::Product.active.joins(:master => :default_price).where(properties_scope).where("spree_prices.amount BETWEEN #{@properties[:min]} AND #{@properties[:max]} AND spree_prices.amount > 0")
           base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
           base_scope = get_products_conditions_for(base_scope, keywords)
           base_scope = add_search_scopes(base_scope)
