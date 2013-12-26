@@ -79,8 +79,8 @@ module Spree
               @properties[:property_ids]=params[:property_ids] unless params[:property_ids].empty?
             end
 
-            @properties[:min]= params[:min_price].to_i > 700000 || params[:min_price].to_i <= 0 ? 0 : params[:min_price].to_i
-            @properties[:max]= params[:max_price].to_i > 700000 || params[:max_price].to_i <= 0 ? 700000 : params[:max_price].to_i
+            @properties[:min]= params[:min_price].to_i > 10_000_000 || params[:min_price].to_i <= 0 ? 0 : params[:min_price].to_i
+            @properties[:max]= params[:max_price].to_i > 10_000_000 || params[:max_price].to_i <= 0 ? 10_000_000 : params[:max_price].to_i
             @properties[:taxon] = params[:taxon].blank? ? nil : Spree::Taxon.find(params[:taxon])
 
             @properties[:keywords] = params[:keywords]
