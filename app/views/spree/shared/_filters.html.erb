@@ -1,0 +1,25 @@
+<% params[:property_ids] ||= {} %>
+<%= form_tag '', :method => :get, :remote => true, :id => 'sidebar_products_search' do %>
+  <% if @taxon %>
+    <% @taxon.main_properties.each do |property| %>
+      <div class="box">
+        <h3><%= property.presentation %></h3>
+        <% values = Spree::ProductProperty.values_to_filter(@taxon,property).map(&:value).uniq %>
+        <% values.each_with_index do |val,index| %>
+          <% params[:property_ids][ property.id.to_s ]||={} %>
+          <p class="<%= "hide" if index>5 %>">
+            <span class="styled-checkbox">
+              <input id="property_<%= property.id %>" type="checkbox" name="property_ids[<%= property.id %>][<%= index %>]" value="<%= val %>" <%= params[:property_ids][ property.id.to_s ] && params[:property_ids][ property.id.to_s ].has_value?(val.to_s) ? "checked: 'checked'" : "" %>/>
+            </span>
+            <label for="property_ids[<%= property.id %>][<%= index %>]"><%= val %></label>
+          </p>
+        <% end %>
+        <% if values.count > 5 %>
+          <p>
+            <a class="other-property-values" href="javascript:">другие параметры</a>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

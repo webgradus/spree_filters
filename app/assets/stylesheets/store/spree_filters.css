@@ -1,2 +1,8 @@
 /*
+ *= require_self
 */
+.hide{display:none !important}
+.show{display:block !important}
+a.other-property-values {
+  font-size: 14px;
+}
