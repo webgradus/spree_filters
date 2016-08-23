@@ -1,6 +1,6 @@
 Spree::Taxon.class_eval do
-  has_many :taxon_properties, -> { order "created_at" }
-  has_many :properties, :through => :taxon_properties
+  has_many :taxon_properties
+  has_many :properties, -> { order "spree_taxon_properties.created_at" }, :through => :taxon_properties
 
   def get_properties(name_cont)
     mas=[]
