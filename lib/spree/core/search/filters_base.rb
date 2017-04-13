@@ -49,7 +49,7 @@ module Spree
           return '' if @properties[:property_ids].nil?
           inter_strings=[]
           @properties[:property_ids].each do |id|
-            inter_strings<<Spree::Product.select('spree_products.id').search(:product_properties_property_id_eq => id.first).result.where("#{id.second.values.map{|e| "lower(spree_product_properties.value) LIKE lower('#{e}')"}.join(' OR ')}").to_sql
+            inter_strings<<Spree::Product.joins(:product_properties).select('spree_products.id').search(:product_properties_property_id_eq => id.first).result.where("#{id.second.values.map{|e| "lower(spree_product_properties.value) LIKE lower('#{e}')"}.join(' OR ')}").to_sql
           end
           inter_strings.join(" INTERSECT ")
         end
